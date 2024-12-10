@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    container_name: backend_app
+    volumes:
+      - .:/home/node/app
+    ports:
+      - '4000:4000'
+
+  db:
+    build: ./.docker/mongodb # Caminho onde o Dockerfile do MongoDB está localizado
+    container_name: mongodb-container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root # Corrigido o typo de MOONGO para MONGO
+      MONGO_INITDB_ROOT_PASSWORD: root # Corrigido o typo de MOONGO para MONGO
+    ports:
+      - '27017:27017' # Porta para expor o MongoDB
+    volumes:
+      - mongodb-data:/data/db # Volume para persistência dos dados
+
+volumes:
+  mongodb-data: # Define o volume para persistir dados
