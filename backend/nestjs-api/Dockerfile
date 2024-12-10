@@ -15,6 +15,7 @@ RUN apt update && \
     openssl \
     procps \
     && npm install && \
+    npm install -g @nestjs/cli@10.4.9 && \
     npm cache clean --force && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*

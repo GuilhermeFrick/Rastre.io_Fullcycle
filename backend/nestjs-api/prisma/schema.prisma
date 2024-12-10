@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,15 +11,33 @@ datasource db {
 }
 
 model Route {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   source      Place
   destination Place
   distance    Float
   duration    Float
   directions  Json
-  created_at  DateTime @default(now())
-  update_at   DateTime @updatedAt
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  RouteDriver RouteDriver? // Relacionamento para um único RouteDriver
+}
+
+model RouteDriver {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  route      Route    @relation(fields: [route_id], references: [id])
+  route_id   String   @unique @db.ObjectId // Adicionado @unique para garantir unicidade
+  points     Point[] // Relacionamento com a tabela Point
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Point {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  location      Coord // Coord como um tipo embutido
+  created_at    DateTime    @default(now())
+  routeDriverId String      @db.ObjectId // Relacionamento com RouteDriver
+  routeDriver   RouteDriver @relation(fields: [routeDriverId], references: [id])
 }
 
 // Define custom types as `type`
