@@ -50,3 +50,9 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io
 Confirme que o Docker foi instalado corretamente:
 
 docker --version
+
+
+8. Crie um repositorio git , clone e altere as permissoues para salvar (nome do meu Repo Rastre.io)
+
+sudo chown -R ubuntu:ubuntu /home/ubuntu/Rastre.io
+
