@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MapsModule } from './maps/maps.module';
 import { ConfigModule } from '@nestjs/config';
+import { RoutesModule } from './routes/routes.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     // Importa o MapsModule
     MapsModule,
+    RoutesModule,
   ],
   controllers: [AppController], // Define os controladores da aplicação
   providers: [AppService], // Define os serviços da aplicação
