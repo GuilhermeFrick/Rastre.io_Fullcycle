@@ -7,7 +7,7 @@ services:
     volumes:
       - .:/home/node/app
     ports:
-      - '4000:4000'
+      - '3000:3000'
 
   db:
     build: ./.docker/mongodb # Caminho onde o Dockerfile do MongoDB está localizado
