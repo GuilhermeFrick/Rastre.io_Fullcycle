@@ -1,0 +1,51 @@
+version: "3.9"
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  backend:
+    build:
+      context: ./nestjs-api
+    container_name: backend_app
+    volumes:
+      - ./nestjs-api:/home/node/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    build:
+      context: ./nestjs-api/.docker/mongodb
+    container_name: mongodb-container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./next-frontend
+    container_name: nextjs-frontend-container
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./next-frontend:/home/node/app
+    environment:
+      - API_URL=http://backend_app:3000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  mongodb-data:
