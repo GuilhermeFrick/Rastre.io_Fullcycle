@@ -1,4 +1,10 @@
+export async function createRouteAction(formData:FormData) {
+  'use server';
 
+  const {sourceId, destinationId} = Object.fromEntries(formData);
+
+  console.log(sourceId,destinationId);
+}
 
 export async function searchDirections(source: string, destination: string) {
   
@@ -137,13 +143,14 @@ export async function NewRoutePage({
                 {directionsData.routes[0].legs[0].duration.text}
               </li>
             </ul>
+            <form action={createRouteAction}>
               {placeSourceId && (
                 <input
                   type="hidden"
                   name="sourceId"
                   defaultValue={placeSourceId}
                 />
-              )}
+              )}  
               {placeDestinationId && (
                 <input
                   type="hidden"
@@ -157,7 +164,7 @@ export async function NewRoutePage({
               >
                 Adicionar rota
               </button>
-    
+            </form>
           </div>
         )}
       </div>
