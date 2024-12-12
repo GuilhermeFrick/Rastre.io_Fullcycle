@@ -16,7 +16,7 @@ RUN npm install
 COPY . .
 
 # Altere de volta para o usuário node
-USER node
+
 
 # Exponha a porta 5000 para a aplicação
 EXPOSE 5000

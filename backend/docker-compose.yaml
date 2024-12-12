@@ -10,13 +10,18 @@ services:
       context: ./nestjs-api
     container_name: backend_app
     volumes:
-      - ./nestjs-api:/home/node/app
+      - ./nestjs-api:/home/node/app:cached
+      - /home/node/app/node_modules
     ports:
       - "3000:3000"
     depends_on:
       - db
     networks:
       - app-network
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=mongodb://root:root@mongodb-container:27017/nestjs?authSource=admin
+      - GOOGLE_MAPS_API_KEY=AIzaSyBlSym0EzM7QSalz5uYhbNRur6KbpiXNJY
 
   db:
     build:
@@ -39,7 +44,8 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./next-frontend:/home/node/app
+      - ./next-frontend:/home/node/app:cached
+      - /home/node/app/node_modules
     environment:
       - API_URL=http://backend_app:3000
     depends_on:
